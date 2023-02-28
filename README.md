@@ -6,7 +6,7 @@ Takagi and Nishimoto, CVPR 2023
 
 # Overview
 <p align="center">
-<img src=/fig1.jpg />
+<img src=/visual_summary.jpg />
 </p>
 
 # Abstract
