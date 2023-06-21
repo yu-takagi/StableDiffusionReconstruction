@@ -133,12 +133,13 @@ Original paper.
 
 Following technical report.
 ```
-@inproceedings{takagi2023high,
-  title={High-resolution image reconstruction with latent diffusion models from human brain activity},
-  author={Takagi, Yu and Nishimoto, Shinji},
-  booktitle={Proceedings of the IEEE/CVF Conference on Computer Vision and Pattern Recognition},
-  pages={14453--14463},
-  year={2023}
+@misc{takagi2023improving,
+      title={Improving visual image reconstruction from human brain activity using latent diffusion models via multiple decoded inputs}, 
+      author={Takagi, Yu and Nishimoto, Shinji},
+      year={2023},
+      eprint={2306.11536},
+      archivePrefix={arXiv},
+      primaryClass={q-bio.NC}
 }
 ```
 
