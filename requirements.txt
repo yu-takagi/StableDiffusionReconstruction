@@ -1,0 +1,8 @@
+nibabel
+h5py
+matplotlib
+pycocotools
+IPython
+himalaya
+timm
+fairscale
