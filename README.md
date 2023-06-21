@@ -2,7 +2,7 @@
 Takagi and Nishimoto, CVPR 2023
 
 [[Paper](https://www.biorxiv.org/content/10.1101/2022.11.18.517004v3)]
-[[Technical Paper](https://www.biorxiv.org/content/10.1101/2022.11.18.517004v3)]
+[[Technical Paper](https://arxiv.org/abs/2306.11536)]
 [[Project Page](https://sites.google.com/view/stablediffusion-with-brain/)]
 [[FAQ](https://sites.google.com/view/stablediffusion-with-brain/faq_en)]
 [[FAQ(Japanese)](https://sites.google.com/view/stablediffusion-with-brain/faq_jp)]
@@ -14,7 +14,7 @@ This is a repository for reproducing the method we presented (Takagi and Nishimo
 <img src=/visual_summary.jpg />
 </p>
 
-Based on our earlier work (Takagi and Nishimoto, CVPR 2023), we further examined the extent to which various additional decoding techniques affect the performance of reconstructing visual experience in a following [Technical Paper](https://www.biorxiv.org/content/10.1101/2022.11.18.517004v3), including a method of decoding text prompt from the brain (see figure below). These methods are also available in this repository.
+Based on our earlier work (Takagi and Nishimoto, CVPR 2023), we further examined the extent to which various additional decoding techniques affect the performance of reconstructing visual experience in a following [Technical Paper](https://arxiv.org/abs/2306.11536), including a method of decoding text prompt from the brain (see figure below). These methods are also available in this repository.
 <p align="center">
 <img src=/visual_summary_techpaper.jpg />
 </p>
