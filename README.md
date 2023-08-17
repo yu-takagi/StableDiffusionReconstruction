@@ -26,11 +26,18 @@ We confirmed that adding several techniques contribute to improving the accuracy
 </p>
 
 # Environment setup
-1. Download ``nsddata``, ``nsddata_betas``, and ``nsddata_stimuli`` from NSD and place them under the ``nsd`` directory.
-2. ``pip install -r requirements.txt``
-3. Install Stable Diffusion v1.4 (under the ``diffusion_sd1/`` directory), download checkpoint (``sd-v1-4.ckpt``), and place it under the ``codes/diffusion_sd1/stable-diffusion/models/ldm/stable-diffusion-v1/`` directory.
-4. For incorporating GAN, install ``bdpy`` (under the ``gan/`` directory), download ``VGG_ILSVRC_19_layers`` and ``bvlc_reference_caffenet_generator_ILSVRC2012_Training`` from https://figshare.com/articles/dataset/brain-decoding-cookbook/21564384, and place them under the ``codes/gan/models/pytorch/`` directory.
-5. For incorporating decoded depth, install Stable Diffusion v2.0 (under the ``diffusion_sd2/`` directory), download checkpoint (``512-depth-ema.ckpt``), and place it under the ``codes/diffusion_sd2/stablediffusion/models/`` directory. 
+1. Download `nsddata`, `nsddata_betas`, and `nsddata_stimuli` from NSD and place them in the `nsd` directory. These are the required files:
+  - nsddata_betas/ppdata/subj01/func1pt8mm/betas_fithrf_GLMdenoise_RR/betas_session01.hdf5 (Note: You will need the `betas_sessionXX.hdf5` files for sessions 01 to 37)
+  - nsddata_stimuli/stimuli/nsd/nsd_stimuli.hdf5
+  - nsddata/experiments/nsd/nsd_expdesign.mat
+  - nsddata/freesurfer/fsaverage/label/streams.mgz.ctab
+  - nsddata/ppdata/subj01/behav/responses.tsv
+  - nsddata/ppdata/subj01/func1pt8mm/roi/streams.nii.gz
+2. Navigate to ``codes/diffusion_sd1/stable-diffusion/`` and run the command ``conda env create -f environment.yaml``. This command will create a conda environment named ``ldm``. Activate this environment with the command ``conda activate ldm``. This environment is used for all methods except the last one (Reconstruction with Decoded Text Prompt + GAN + Decoded Depth).
+3. For the last method (Reconstruction with Decoded Text Prompt + GAN + Decoded Depth), navigate to ``codes/diffusion_sd2/stablediffusion/`` and run the command `conda env create -f environment.yaml` to create a separate conda environment named ``ldm2``, then activate it.
+4. Download checkpoint (``sd-v1-4.ckpt``), and place it under the ``codes/diffusion_sd1/stable-diffusion/models/ldm/stable-diffusion-v1/`` directory.
+5. For incorporating GAN, download ``VGG_ILSVRC_19_layers`` and ``bvlc_reference_caffenet_generator_ILSVRC2012_Training`` from https://figshare.com/articles/dataset/brain-decoding-cookbook/21564384, and place them under the ``codes/gan/models/pytorch/`` directory.
+6. For incorporating decoded depth, download checkpoint (``512-depth-ema.ckpt``), and place it under the ``codes/diffusion_sd2/stablediffusion/models/`` directory. 
 
 # MRI Preprocessing
 ```
@@ -41,7 +48,7 @@ python make_subjmri.py --subject subj01
 # Reconstruction based on CVPR method
 ```
 cd codes/utils/
-python img2feat_sd1.py  --imgidx 0 73000 --gpu 0
+python img2feat_sd.py --imgidx 0 73000 --gpu 0
 python make_subjstim.py --featname init_latent --use_stim each --subject subj01
 python make_subjstim.py --featname init_latent --use_stim ave --subject subj01
 python make_subjstim.py --featname c --use_stim each --subject subj01
@@ -50,7 +57,7 @@ python ridge.py --target c --roi ventral --subject subj01
 python ridge.py --target init_latent --roi early --subject subj01
 
 cd codes/diffusion_sd1/
-python diffusion_decoding.py --imgidx 0 10 --gpu 1 --subject subj01 --method cvpr
+python diffusion_decoding.py --imgidx 0 --gpu 1 --subject subj01 --method cvpr
 ```
 
 # Reconstruction with Decoded Text Prompt
@@ -78,12 +85,10 @@ python setup.py install
 cd codes/gan/
 python make_vgg19bdpy.py --imgidx 0 73000
 
-cd codes/utils/
 (run the following code from conv1_1 to fc8.)
 python make_subjstim_vgg19.py --layer conv1_1 --subject subj01
 python ridge.py --target conv1_1 --roi early ventral midventral midlateral lateral parietal --subject subj01
 
-cd codes/gan/
 python make_vgg19fromdecode.py --subject subj01
 python recon_icnn_image_vgg19_dgn_relu7gen_gd.py
 
